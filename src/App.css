@@ -1,38 +1,89 @@
-.App {
-  text-align: center;
+body {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
+.react-autosuggest__suggestions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.Toastify__toast--error {
+  border: 1px solid #eb5757;
+  border-radius: 50px !important;
+  background: #fae1e2 !important;
+}
+.Toastify__toast--error::after {
+  position: absolute;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 700;
+  left: 265px;
+  padding-top: 14px !important;
+}
+.Toastify__toast--error::before {
+  position: relative;
+  z-index: 100000;
+  left: 12px;
+  top: 6px;
+}
+.Toastify__toast--success {
+  border: 1px solid #3a9ea5 !important;
+  border-radius: 50px !important;
+  background: #f0f9fa !important;
+}
+.Toastify__toast--info {
+  border: 1px solid #3a9ea5 !important;
+  border-radius: 50px !important;
+  background: #f0f9fa !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Toastify__toast--success::before {
+  position: relative;
+  z-index: 100000;
+  left: 12px;
+  top: 6px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Toastify__toast--success::after {
+  position: absolute;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 700;
+  left: 265px;
+  padding-top: 14px !important;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Toastify__toast--warning {
+  border: 1px solid #e78326 !important;
+  border-radius: 50px !important;
+  background: #fadfc5 !important;
 }
-
-.App-link {
-  color: #61dafb;
+.Toastify__toast--warning::before {
+  position: relative;
+  z-index: 100000;
+  left: 12px;
+  top: 6px;
 }
+.Toastify__toast--warning::after {
+  position: absolute;
+  color: #e78326;
+  font-size: 15px;
+  font-weight: 700;
+  left: 265px;
+  padding-top: 14px !important;
+}
+.Toastify__toast-body {
+  color: #444c63;
+  font-size: 16px;
+  padding-left: 20px;
+  line-height: 20px;
+  padding: 0px;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  width: 100%;
+  font-weight: 400;
+  margin-left: 25px !important;
+}
+.Toastify__toast > button > svg {
+  display: none;
+}
+.MuiPickersBasePicker-pickerView {
+  max-width: 500px !important;
 }

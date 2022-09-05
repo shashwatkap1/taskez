@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth"
+import "./App.css"
+import { useState } from "react"
+import "react-toastify/dist/ReactToastify.css"
+import { ToastContainer } from "react-toastify"
 
+import "./firebase.config"
+import { Route, Routes, useNavigate } from "react-router"
+import Projects from "./views/Projects"
+import Auth from "./views/Auth"
+import Admin from "./views/Admin"
+import { useEffect } from "react"
 function App() {
+  const navigate = useNavigate()
+  const auth = getAuth()
+  const user = auth.currentUser
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/projects")
+      } else {
+        navigate("/auth")
+      }
+    })
+  }, [user])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="/auth" element={<Auth />}></Route>
+        <Route path="/admin" element={<Admin />}></Route>
+        <Route path="*" element={<Admin />}></Route>
+      </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        limit={1}
+        pauseOnFocusLoss={false}
+        hideProgressBar={true}
+      />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,17 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react"
+import ReactDOM from "react-dom/client"
+import "./index.css"
+import App from "./App"
+import { BrowserRouter } from "react-router-dom"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { DndProvider, useDrag } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
+import { MuiThemeProvider } from "@material-ui/core"
+import theme from "./theme"
+
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+  <BrowserRouter>
+    <DndProvider backend={HTML5Backend}>
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
+    </DndProvider>
+  </BrowserRouter>
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
