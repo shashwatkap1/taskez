@@ -1,3 +1,17 @@
+Stack used:
+React JS & Material UI- I modified the design system and theme according to the given design files on Figma.
+Firebase- I have used firabse due to the time limitations. It provides easy and quick nocode database and authentication management.
+ReactDnd- The drag and drop functionality has been implemented using reactdnd along the HTML backend api to detect drag and drops.
+
+Key Features:
+Login & SignUp along with "Remember me" functionality.
+Task Creation & Editing
+Drag and drop
+Visual and audio feedback for every user action.
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
