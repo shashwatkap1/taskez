@@ -4,12 +4,7 @@ import Sidebar from "../../components/Sidebar"
 import Projects from "../Projects"
 import { Grid, Typography } from "@material-ui/core"
 import { getAuth } from "firebase/auth"
-import { collection, getDoc } from "firebase/firestore"
-import { firebaseStore } from "../../firebase.config"
-import { useEffect } from "react"
-import { useState } from "react"
 function Admin() {
-  const [userName, setUserName] = useState("")
   const auth = getAuth()
   const user = auth?.currentUser
 

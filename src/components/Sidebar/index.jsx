@@ -1,7 +1,7 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Drawer from "@material-ui/core/Drawer"
-import { Grid, Button, Typography } from "@material-ui/core"
+import { Grid, Typography } from "@material-ui/core"
 import { NavLink } from "react-router-dom"
 import { colors } from "../../colors"
 import { getAuth } from "firebase/auth"
@@ -34,11 +34,11 @@ function Sidebar() {
   const auth = getAuth()
   const classes = useStyles()
   const routes = [
-    { route: "Overview", icon: <i class="fa-solid fa-house"></i> },
-    { route: "Stats", icon: <i class="fa-solid fa-chart-simple"></i> },
-    { route: "Projects", icon: <i class="fa-solid fa-folder-open"></i> },
-    { route: "Chat", icon: <i class="fa-solid fa-comment-dots"></i> },
-    { route: "Calendar", icon: <i class="fa-solid fa-calendar-days"></i> },
+    { route: "Overview", icon: <i className="fa-solid fa-house"></i> },
+    { route: "Stats", icon: <i className="fa-solid fa-chart-simple"></i> },
+    { route: "Projects", icon: <i className="fa-solid fa-folder-open"></i> },
+    { route: "Chat", icon: <i className="fa-solid fa-comment-dots"></i> },
+    { route: "Calendar", icon: <i className="fa-solid fa-calendar-days"></i> },
   ]
   return (
     <div className={classes.root}>
@@ -53,6 +53,7 @@ function Sidebar() {
         <div className={classes.toolbar} />
         {routes.map((ele, index) => (
           <NavLink
+            key={ele.route}
             to={`./${ele.route}`}
             style={({ isActive }) => {
               return {
@@ -73,8 +74,6 @@ function Sidebar() {
         ))}
         <Grid item xs={12}>
           <Typography
-            // variant="outlined"
-            fullWidth
             style={{
               fontSize: "16px",
               textDecoration: "none",
@@ -89,7 +88,7 @@ function Sidebar() {
             }}
           >
             <i
-              class="fa-solid fa-right-from-bracket"
+              className="fa-solid fa-right-from-bracket"
               style={{ marginRight: "0.5rem" }}
             ></i>
             Logout

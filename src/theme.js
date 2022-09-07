@@ -64,15 +64,6 @@ let theme = createTheme({
   },
 
   overrides: {
-    MuiInput: {
-      input: {
-        "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
-          "-webkit-appearance": "none",
-          display: "none",
-        },
-      },
-    },
-
     MuiOutlinedInput: {
       root: {
         // background: "#FFFFFF",

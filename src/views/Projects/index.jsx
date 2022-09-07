@@ -1,21 +1,12 @@
 import { Grid } from "@material-ui/core"
-import {
-  collection,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import React, { useState } from "react"
 import { useEffect } from "react"
 import TaskColumn from "../../components/Projects/TaskColumn"
 import { firebaseStore } from "../../firebase.config"
 import { Typography, TextField } from "@material-ui/core"
-import { toast } from "react-toastify"
 import { getAuth } from "firebase/auth"
 import { LinearProgress, makeStyles } from "@material-ui/core"
-import moment from "moment"
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -29,46 +20,14 @@ function Projects() {
     { label: "In Progress", value: "inProgress" },
     { label: "Completed", value: "completed" },
   ]
-  const projectsData = [
-    {
-      name: "Say hi to colleagues1",
-      id: "1",
-      status: "todo",
-      description: "Cutie Pie",
-    },
-    {
-      name: "Say hi to colleagues2",
-      id: "2",
-      status: "todo",
-      description: "Cutie Pie",
-    },
-    {
-      name: "Say hi to colleagues3",
-      id: "3",
-      status: "completed",
-      description: "Cutie Pie",
-    },
-    {
-      name: "Say hi to colleagues4",
-      id: "4",
-      status: "inProgress",
-      description: "Cutie Pie",
-    },
-    {
-      name: "Say hi to colleagues5",
-      id: "5",
-      status: "inProgress",
-      description: "Cutie Pie2",
-    },
-  ]
   const [tasks, setTasks] = useState([])
   const [allTasks, setAllTasks] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
   useEffect(() => {
     handleSearch(searchQuery)
+    //eslint-disable-next-line
   }, [searchQuery, allTasks])
   const auth = getAuth()
-  const [updater, setUpdater] = useState(false)
   const userId = auth?.currentUser?.uid
   const getTasks = (userId) => {
     setLoading(true)
@@ -79,19 +38,13 @@ function Projects() {
 
     getDocs(q)
       .then((res) => {
-        console.log(res.docs.map((ele) => ({ ...ele.data(), id: ele.id })))
-        setAllTasks([
-          ...res.docs.map((ele) => ({
-            ...ele.data(),
-            id: ele.id,
-          })),
-        ])
-        setTasks([
-          ...res.docs.map((ele) => ({
-            ...ele.data(),
-            id: ele.id,
-          })),
-        ])
+        const data = res.docs.map((ele) => ({
+          ...ele.data(),
+          id: ele.id,
+        }))
+
+        setAllTasks(data.slice())
+        setTasks(data.slice())
         setLoading(false)
       })
       .catch((Err) => {
@@ -100,7 +53,7 @@ function Projects() {
   }
   const handleSearch = (searchQuery) => {
     if (searchQuery) {
-      const filteredTasks = allTasks.filter(
+      const filteredTasks = [...allTasks].filter(
         (ele) =>
           ele.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           ele.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -113,32 +66,8 @@ function Projects() {
   }
   useEffect(() => {
     if (userId) getTasks(userId)
-  }, [userId, updater])
-  const changeTaskStatus = (task, status) => {
-    const currTasks = [...allTasks]
-    console.log(allTasks, task, status)
-    const index = allTasks.findIndex((ele) => ele.id === task.id)
-    console.log(task, status, index, allTasks)
-    if (index !== -1) {
-      const oldStatus = task.status
-      // setDoc(collection(firebaseStore, `tasks/${task.id}`), {
-      //   ...task,
-      //   status: status,
-      // })
-      //   .then((res) => {
-      //     console.log(res)
-      //   })
-      //   .catch((err) => {
-      //     // currTasks[index] = { ...currTasks[index], status: status }
-      //     // setTasks([...currTasks])
-      //     console.log(err)
-      //     toast.error("Some error ocucred. Please refresh the page")
-      //   })
-      currTasks[index] = { ...currTasks[index], status: status }
-      // setTasks(currTasks)
-    }
-    // setTasks([...currTasks])
-  }
+  }, [userId])
+
   return (
     <Grid container>
       {loading ? (
@@ -163,7 +92,7 @@ function Projects() {
           InputProps={{
             startAdornment: (
               <i
-                class="fa-solid fa-magnifying-glass"
+                className="fa-solid fa-magnifying-glass"
                 style={{ marginRight: "0.3rem" }}
               ></i>
             ),
@@ -179,9 +108,9 @@ function Projects() {
             <TaskColumn
               column={statusType}
               key={statusType.value}
+              allTasks={allTasks}
               setTasks={setAllTasks}
               tasks={tasks.filter((ele) => ele.status === statusType.value)}
-              changeTaskStatus={changeTaskStatus}
             />
           )
         })}

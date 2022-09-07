@@ -1,22 +1,17 @@
 import React from "react"
 import {
   getAuth,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   setPersistence,
-  browserSessionPersistence,
   inMemoryPersistence,
   browserLocalPersistence,
 } from "firebase/auth"
 import { useState } from "react"
 import { validateEmail } from "../../../helper"
 import { toast } from "react-toastify"
-import { useNavigate } from "react-router"
 import { Grid, TextField, Typography, Button } from "@material-ui/core"
 import { CircularProgress, FormControlLabel, Checkbox } from "@material-ui/core"
-import { colors } from "../../../colors"
 function Login() {
-  const navigate = useNavigate()
   const [authDetails, setAuthDetails] = useState({ email: "", password: "" })
   const [rememberMe, setRememberMe] = useState(true)
   const handleEnter = (authDetails) => {
@@ -46,7 +41,6 @@ function Login() {
       .then((userCredential) => {
         // Signed in
         setLoading(false)
-        console.log("Signed In")
       })
       .catch((error) => {
         setLoading(false)

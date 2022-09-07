@@ -2,7 +2,6 @@ import React from "react"
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   updateProfile,
   setPersistence,
   inMemoryPersistence,
@@ -11,10 +10,9 @@ import {
 import { useState } from "react"
 import { toast } from "react-toastify"
 import { addDoc, collection } from "firebase/firestore"
-import { database, firebaseStore } from "../../../firebase.config"
-import { get, onValue, ref, set } from "firebase/database"
+import { firebaseStore } from "../../../firebase.config"
 import { validateEmail } from "../../../helper"
-import { Grid, TextField, Typography, Button } from "@material-ui/core"
+import { Grid, TextField, Button } from "@material-ui/core"
 import { CircularProgress, FormControlLabel, Checkbox } from "@material-ui/core"
 function SignUp() {
   const [authDetails, setAuthDetails] = useState(null)
@@ -65,8 +63,6 @@ function SignUp() {
             console.log(err)
           })
         // Signed in
-
-        console.log(userCredential) // ...
       })
       .catch((error) => {
         setLoading(false)

@@ -1,16 +1,10 @@
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import "./App.css"
-import { useState } from "react"
 import "react-toastify/dist/ReactToastify.css"
 import { ToastContainer } from "react-toastify"
 
 import "./firebase.config"
 import { Route, Routes, useNavigate } from "react-router"
-import Projects from "./views/Projects"
 import Auth from "./views/Auth"
 import Admin from "./views/Admin"
 import { useEffect } from "react"
@@ -26,6 +20,7 @@ function App() {
         navigate("/auth")
       }
     })
+    //eslint-disable-next-line
   }, [user])
 
   return (

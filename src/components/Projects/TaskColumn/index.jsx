@@ -2,23 +2,47 @@ import React from "react"
 import { useDrop } from "react-dnd"
 import Task from "../Task"
 import { Grid, Typography, Button, TextField } from "@material-ui/core"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 import { firebaseStore } from "../../../firebase.config"
 import { toast } from "react-toastify"
 import { useState } from "react"
 import moment from "moment"
-import success from "./../../../assets/audio/confirm.mp3"
-import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core"
+import { CircularProgress } from "@material-ui/core"
 import { getAuth } from "firebase/auth"
+import { playSuccessSound } from "../../../helper"
 
-function TaskColumn({ column, tasks, changeTaskStatus, setTasks }) {
+function TaskColumn({ column, tasks, setTasks, allTasks }) {
   const auth = getAuth()
   const [loading, setLoading] = useState(false)
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: "Task",
       drop: (item) => {
-        if (item.status !== column.value) changeTaskStatus(item, column.value)
+        if (item.status !== column.value) {
+          setTasks((prev) => {
+            const currTasks = prev.slice()
+            const idx = currTasks.findIndex((ele) => ele.id === item.id)
+
+            if (idx !== -1) {
+              currTasks.splice(idx, 1)
+              currTasks.splice(0, 0, {
+                ...item,
+                status: column.value,
+              })
+              return currTasks
+            } else return prev
+          })
+          const dbRef = doc(firebaseStore, "tasks", item.id)
+          setDoc(dbRef, {
+            ...item,
+            status: column.value,
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log(err)
+              toast.error("Some error occured. Please refresh the page")
+            })
+        }
       },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
@@ -52,18 +76,7 @@ function TaskColumn({ column, tasks, changeTaskStatus, setTasks }) {
           setLoading(false)
 
           setNewTask(null)
-          const audio = new Audio(success)
-          const promise = audio.play()
-          if (promise !== undefined) {
-            // On older browsers play() does not return anything, so the value would be undefined.
-            promise
-              .then(() => {
-                // Audio is playing.
-              })
-              .catch((error) => {
-                console.log(error)
-              })
-          }
+          playSuccessSound()
           setTasks((prev) => {
             const curr = [...prev]
             curr.splice(0, 0, {
@@ -139,7 +152,7 @@ function TaskColumn({ column, tasks, changeTaskStatus, setTasks }) {
             handleAddTask()
           }}
         >
-          <i class="fas fa-plus"></i>
+          <i className="fas fa-plus"></i>
         </Button>
       </Grid>
       <Grid container item xs={12}>
@@ -242,7 +255,14 @@ function TaskColumn({ column, tasks, changeTaskStatus, setTasks }) {
         {tasks.map((task) => {
           if (task.status !== column.value) return null
           else {
-            return <Task task={task} key={task.id} />
+            return (
+              <Task
+                task={task}
+                key={task.id}
+                allTasks={allTasks}
+                setTasks={setTasks}
+              />
+            )
           }
         })}
       </Grid>

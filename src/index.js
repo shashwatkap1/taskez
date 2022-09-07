@@ -4,7 +4,7 @@ import "./index.css"
 import App from "./App"
 import { BrowserRouter } from "react-router-dom"
 
-import { DndProvider, useDrag } from "react-dnd"
+import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { MuiThemeProvider } from "@material-ui/core"
 import theme from "./theme"
