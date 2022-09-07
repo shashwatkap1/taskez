@@ -7,7 +7,7 @@ ReactDnd- The drag and drop functionality has been implemented using reactdnd al
 Login & SignUp along with "Remember me" functionality.\
 Task Creation & Editing\
 Drag and drop\
-Visual and audio feedback for every user action.\
+Visual and audio feedback for every user action.
 
 
 
