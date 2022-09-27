@@ -1,9 +1,9 @@
-#Stack used:\
+# Stack used:\
 React JS & Material UI- I modified the design system and theme according to the given design files on Figma.\
 Firebase- I have used firabse due to the time limitations. It provides easy and quick nocode database and authentication management.\
 ReactDnd- The drag and drop functionality has been implemented using reactdnd along the HTML backend api to detect drag and drops.\
 
-#Key Features:\
+# Key Features:\
 Login & SignUp along with "Remember me" functionality.\
 Task Creation & Editing\
 Drag and drop\
